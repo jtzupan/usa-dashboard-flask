@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, send_file
 # from . import main
 
 
@@ -13,7 +13,7 @@ def index():
 
 @main.route("/aboutUs/")
 def aboutUs():
-    return 'about us page'
+    return render_template('aboutUs.html')
 
 
 @main.route("/contact/")
@@ -21,9 +21,15 @@ def contact():
     return 'contact us page'
 
 
-@main.route("/data/")
-def data():
-    return 'Data Page'
+@main.route("/download/", methods=["GET", "POST"])
+def download():
+    return render_template('downloads.html')
+
+
+@main.route('/return-file/')
+def return_file():
+    filepath = os.path.join('data', 'det', 'sampleData.txt')
+    return send_file(filepath, attachment_filename='sampleData.txt', as_attachment=True)
 
 
 if __name__ == '__main__':
